@@ -222,7 +222,8 @@
     </div>
 
 
-
+    
+<div id="quiz-counter"></div>
 
 
 
@@ -255,7 +256,7 @@
                 showCurrentQuiz();
             } catch (error) {
                 console.error('データ取得エラー:', error);
-                alert('データ取得エラーが発生しました1。');
+                alert('データ取得エラーが発生しました。');
             }
         }
 
@@ -274,6 +275,13 @@
             if (currentQuiz < quizzes.length) {
                 const quiz = quizzes[currentQuiz];
                 document.getElementById('question').innerText = quiz.question;
+
+                
+                 // クイズの番号を表示
+        const counterElement = document.getElementById('quiz-counter');
+        counterElement.innerText = `${currentQuiz + 1}/${quizzes.length}`;
+
+
                 const options = document.querySelectorAll('.quiz-option');
                 options.forEach((option, index) => {
                     option.innerText = quiz.options[index];
