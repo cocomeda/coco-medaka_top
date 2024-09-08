@@ -318,55 +318,47 @@ function initializeLiff0003() {
 
 
         
-  async function sendIdTokenToGAS_00A3() {
-      try {
-          
-showLoading(); // ローディング表示
-          
+async function sendIdTokenToGAS_00A3() {
+    try {
+        showLoading(); // ローディング表示
+
+        const normalizedAngle = finalAngle % (Math.PI * 2);
+        const sliceAngle = (Math.PI * 2) / totalSlices;
+        const winningSlice = Math.floor((Math.PI * 2 - normalizedAngle) / sliceAngle) % totalSlices;
+        const adjustedAnswers = labels[winningSlice];
+
         const idToken = await liff.getIDToken();
-          
-　　const adjustedAnswers = answers.map(answer => answer + 1);
-      
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwy8sbG8Y15Q2Pk42ec9fGT4eBzlHBeWqbbI10JUucRBRm4UyhJ_fr9E4TUN8h0agcZxQ/exec', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
- 　　　　　　　body: JSON.stringify({
-                'idToken': idToken,
-                'answers': adjustedAnswers // JSON形式で送信
+
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxqnyL5US-WPww0A1d1Lbabve48GCc5DYUdgoG0Oh4qroa9KHTA59bto3xqZh77HaZF/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idToken: idToken,
+                result: adjustedAnswers // JSON形式で送信
             })
         });
 
         if (!response.ok) {
-          console.error('HTTPエラー:', response.status);
-          alert('HTTPエラーが発生しました。ステータスコード: ' + response.status);
-          return;
+            console.error('HTTPエラー:', response.status);
+            alert('HTTPエラーが発生しました。ステータスコード: ' + response.status);
+            return;
         }
 
         const data = await response.json();
         if (data.status === 'success') {
-            
-          showPopup(data.message);
-
-
-            
+            showPopup(data.message);
         } else {
-            
-            
-          showPopup('エラー: ' + data.message);
-
-            
+            showPopup('エラー: ' + data.message);
         }
-      } catch (error) {
+    } catch (error) {
         console.error('通信エラー:', error);
         alert('通信エラーが発生しました。');
-      } finally {
-                hideLoading(); // ローディング表示を非表示
-            }
+    } finally {
+        hideLoading(); // ローディング表示を非表示
     }
-
-
+}
 
 
 
