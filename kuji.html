@@ -43,7 +43,6 @@
 </head>
 <body>
 
-
 <div class="container">
     <canvas id="roulette" width="300" height="300"></canvas>
     <div class="arrow"></div>
@@ -51,8 +50,6 @@
 <button id="spin">ルーレットを回す</button>
 
 <script>
-
-    
     const canvas = document.getElementById('roulette');
     const ctx = canvas.getContext('2d');
     const centerX = canvas.width / 2;
@@ -70,40 +67,6 @@
     const totalSlices = labels.length;
     let currentAngle = 0;
     let isSpinning = false;
-    let spinRequestId = null;  // requestAnimationFrameのIDを保存
-
-
-
-
-    
-	    
-        // LIFFの初期化
-        liff.init({ liffId: '1657313823-VWk8Yr5E' }, () => {
-            if (liff.isLoggedIn()) {
-                // ユーザーがログインしている場合
-                sendIdTokenToGAS();
-            } else {
-                // ログインが必要な場合、ログインページを表示
-                liff.login();
-            }
-        });
-
-        // IDトークンをGASに送信する関数
-        function sendIdTokenToGAS() {
-            const idToken = liff.getIDToken();
-
-
-
-drawRoulette()
-            
-        }
-
-
-
-
-
-
-
 
     // ルーレットの描画
     function drawRoulette() {
@@ -121,7 +84,6 @@ drawRoulette()
             ctx.fill();
             ctx.stroke();
             ctx.save();
-
 
             // テキストの描画（黒縁の白）
             ctx.translate(centerX, centerY);
@@ -154,59 +116,53 @@ drawRoulette()
         isSpinning = true;
 
         const duration = 5000;  // アニメーションの持続時間
-        const spins = Math.random() * 5 + 11;  // ランダムな回転数
+        const spins = Math.random() * 5 + 8;  // ランダムな回転数
         const finalAngle = spins * Math.PI * 2 + Math.random() * Math.PI * 2;
         let startTime = null;
 
         function animate(time) {
             if (!startTime) startTime = time;
             const elapsed = time - startTime;
-            const easing = (t) => t < 0.3 ? Math.pow(t / 0.3, 2) : 1 - Math.pow(1 - (t - 0.3) / 0.7, 2);  // 最初の加速を速くするイージング関数
+            const easing = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;  // 徐々に減速するイージング関数
             const progress = Math.min(elapsed / duration, 1);
             currentAngle = finalAngle * easing(progress);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             drawRoulette();
             if (progress < 1) {
-                spinRequestId = requestAnimationFrame(animate);
+                requestAnimationFrame(animate);
             } else {
-                showResult(finalAngle);
+                sendResultToGAS(finalAngle);
                 isSpinning = false;
-                document.getElementById('spin').innerText = 'ルーレットを回す';
             }
         }
-        spinRequestId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
     }
 
-    // ルーレットの回転を停止
-    function stopRoulette() {
-        if (spinRequestId) {
-            cancelAnimationFrame(spinRequestId);
-            showResult(currentAngle);
-            isSpinning = false;
-            document.getElementById('spin').innerText = 'ルーレットを回す';
-        }
-    }
-
-    // 当たった結果を表示
-    function showResult(finalAngle) {
+    // ルーレットの結果をGASに送信
+    function sendResultToGAS(finalAngle) {
         const normalizedAngle = finalAngle % (Math.PI * 2);
         const sliceAngle = (Math.PI * 2) / totalSlices;
         const winningSlice = Math.floor((Math.PI * 2 - normalizedAngle) / sliceAngle) % totalSlices;
-        alert(`当たりは: ${labels[winningSlice]}です！`);
+        const result = labels[winningSlice];
+
+        // Google Apps ScriptのエンドポイントURL
+        const url = 'YOUR_GAS_WEB_APP_URL';
+        
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ result: result })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);  // GASからの返答をポップアップで表示
+        })
+        .catch(error => console.error('Error:', error));
     }
 
     drawRoulette();
 
-    // ボタンのクリックイベントを変更
-    document.getElementById('spin').addEventListener('click', function() {
-        if (!isSpinning) {
-            spinRoulette();
-            this.innerText = 'ルーレットを止める';
-        } else {
-            stopRoulette();
-        }
-    });
+    document.getElementById('spin').addEventListener('click', spinRoulette);
 </script>
 
 </body>
