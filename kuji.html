@@ -198,7 +198,7 @@
         const result = labels[winningSlice];
 
 
-alert("result"+result)
+//alert("result"+result)
 
  
 
@@ -207,7 +207,7 @@ alert("result"+result)
         .then(() => {
           if (liff.isLoggedIn()) {
 
-      sendResultToGAS();
+      sendResultToGAS(result);
 
           } else {
             liff.login(); // ログインしていない場合はログインページにリダイレクト
@@ -245,7 +245,7 @@ async function sendResultToGAS() {
         showLoading(); // ローディング表示
 
      
-alert("result2:"+result)
+
 
 
         const idToken = await liff.getIDToken();
