@@ -140,6 +140,8 @@
         <span id="close-btn" onclick="closePopup()">×</span>
         <div id="popup-message"></div>
     </div>
+
+    
     <div id="loading-overlay">
         <div id="loading-message">読み込み中…</div>
     </div>
@@ -328,6 +330,21 @@
  setTimeout(closePopup, 2000); // 3秒後にポップアップを閉じる          
  window.location.href = 'index.html';
         }
+
+
+
+function showLoading() {
+    document.getElementById('loading-overlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loading-overlay').style.display = 'none';
+}
+
+
+
+
+        
     </script>
 </body>
 </html>
