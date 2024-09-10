@@ -287,33 +287,39 @@
         });
 
         
-        function sendResultToGAS2(result) {
+        function sendResultToGAS(result) {
             
-            showLoading('loading-overlay');
+         showLoading('loading-overlay');
 
-            
-  const idToken = liff.getIDToken();
-
-           
+    liff.getIDToken()
+        .then((idToken) => {
+            // POSTリクエストでGASにデータを送信
             $.post('https://script.google.com/macros/s/AKfycbyXrRwsMWBVjMvqhNtUo4ZJDqgtVQH8QP86inBPVyrUw4BHpfxxEJ5u6aUIeGdczzcP/exec', {
                 result: result,
-                idToken: liff.getIDToken()
+                idToken: idToken
             })
-            .done(() => {
+            .done((response) => {
                 hideLoading('loading-overlay');
-                showPopup('結果は: ' + result);
+                // GASから返されたメッセージをポップアップ表示
+                showPopup('GASからのメッセージ: ' + response.message);
             })
             .fail((jqXHR, textStatus, errorThrown) => {
                 hideLoading('loading-overlay');
                 console.error('エラー:', textStatus, errorThrown);
-                alert('結果の送信に失敗しました。a2');
+                alert('結果の送信に失敗しました。');
             });
+        })
+        .catch((error) => {
+            hideLoading('loading-overlay');
+            console.error('IDトークン取得エラー:', error);
+            alert('IDトークンの取得に失敗しました。');
+        });
         }
 
 
 
 
- function sendResultToGAS(result) {
+ function sendResultToGAS2(result) {
             const idToken = liff.getIDToken();
 
             // ローディング画像表示
