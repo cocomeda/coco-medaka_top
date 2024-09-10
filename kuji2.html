@@ -287,12 +287,14 @@
         });
 
         
-        function sendResultToGAS(result) {
+        function sendResultToGAS2(result) {
+            
             showLoading('loading-overlay');
 
+            
   const idToken = liff.getIDToken();
 
-            
+           
             $.post('https://script.google.com/macros/s/AKfycbyXrRwsMWBVjMvqhNtUo4ZJDqgtVQH8QP86inBPVyrUw4BHpfxxEJ5u6aUIeGdczzcP/exec', {
                 result: result,
                 idToken: liff.getIDToken()
@@ -308,6 +310,46 @@
             });
         }
 
+
+
+
+ function sendResultToGAS(result) {
+            const idToken = liff.getIDToken();
+
+            // ローディング画像表示
+            $('#loading').show();
+
+            // IDトークンをGASに送信
+            $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbyXrRwsMWBVjMvqhNtUo4ZJDqgtVQH8QP86inBPVyrUw4BHpfxxEJ5u6aUIeGdczzcP/exec',
+                type: 'POST',
+                data: { idToken: idToken,
+                         result: result
+                      },
+                success: function (response) {
+                    // 成功時
+                    console.log(response);
+                    displayData(response);
+                },
+                error: function (error) {
+                    // エラー時
+                   // console.error(error);
+                    //alert('Failed to send ID Token to GAS.');
+                },
+                complete: function () {
+                    // 通信完了時の処理（ローディング画像を非表示にし、コンテンツを表示）
+                    $('#loading').hide();
+                    $('#content').show();
+                }
+            });
+        }
+
+
+
+        
+
+
+        
         function showLoading(overlayId) {
             document.getElementById(overlayId).style.display = 'flex';
         }
