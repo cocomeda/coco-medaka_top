@@ -264,6 +264,8 @@
             liff.init({ liffId: '1657313823-VWk8Yr5E' })
                 .then(() => {
                     if (liff.isLoggedIn()) {
+
+                    
                         sendResultToGAS(result);
                     } else {
                         liff.login();
@@ -288,7 +290,7 @@
 
         
         function sendResultToGAS(result) {
-            
+            alert("a")
          showLoading('loading-overlay');
 
     liff.getIDToken()
