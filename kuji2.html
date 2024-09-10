@@ -273,7 +273,7 @@
                 })
                 .catch(error => {
                     console.error('LIFFの初期化エラー:', error);
-                    alert('LIFFの初期化に失敗しました。');
+                    alert('LIFFの初期化に失敗しました。33');
                 });
         }
 
@@ -289,7 +289,7 @@
         });
 
         
-        function sendResultToGAS(result) {
+        function sendResultToGAS2(result) {
             alert("a")
          showLoading('loading-overlay');
 
@@ -321,7 +321,7 @@
 
 
 
- function sendResultToGAS2(result) {
+ function sendResultToGAS(result) {
             const idToken = liff.getIDToken();
 
             // ローディング画像表示
@@ -337,7 +337,7 @@
                 success: function (response) {
                     // 成功時
                     console.log(response);
-                    displayData(response);
+                    showPopup(response);
                 },
                 error: function (error) {
                     // エラー時
