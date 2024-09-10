@@ -323,6 +323,9 @@
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
+
+ setTimeout(closePopup, 2000); // 3秒後にポップアップを閉じる          
+ window.location.href = 'index.html';
         }
     </script>
 </body>
