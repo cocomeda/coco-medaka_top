@@ -210,6 +210,9 @@
         function sendResultToGAS(result) {
             showLoading('loading-overlay');
 
+
+
+            
             $.post('https://script.google.com/macros/s/AKfycbxNunvCR1rhCpFbDTQfpzpBd66jvPMs_nnkOtJjsC1H5Bu5iu2TVSaYjT5AQUG-Azk/exec', {
                 result: result,
                 idToken: liff.getIDToken()
@@ -221,7 +224,7 @@
             .fail((jqXHR, textStatus, errorThrown) => {
                 hideLoading('loading-overlay');
                 console.error('エラー:', textStatus, errorThrown);
-                alert('結果の送信に失敗しました。');
+                alert('結果の送信に失敗しました。a2');
             });
         }
 
