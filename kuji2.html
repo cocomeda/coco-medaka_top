@@ -210,7 +210,7 @@
         function sendResultToGAS(result) {
             showLoading('loading-overlay');
 
-
+  const idToken = liff.getIDToken();
 
             
             $.post('https://script.google.com/macros/s/AKfycbzhMZPZO2dtEwYlNxvClRRm7hxVlFWYFwFYEYfd5nKNjXhHxS0i9zjE-kr7p2qcz9v8/exec', {
