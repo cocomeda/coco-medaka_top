@@ -337,7 +337,7 @@
                 success: function (response) {
                     // 成功時
                     console.log(response);
-                    showPopup(response);
+                    showPopup(JSON.stringify(response));
                 },
                 error: function (error) {
                     // エラー時
