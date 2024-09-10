@@ -1,8 +1,8 @@
 <html>
 <head>
-  <title>くじ引き[b]0B5JEMmG</title>
+  <title>くじ引き</title>
   <style>
-          /* 既存のスタイル */
+            /* 既存のスタイル */
         #overlay {
             display: none;
             position: fixed;
@@ -79,7 +79,7 @@
   <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 </head>
 <body>
-  <h1>くじ引き</h1>
+  <h1>一等:３点　二等:２点　三等:１点</h1>
 
 
     <div id="overlay" onclick="closePopup()"></div>
@@ -102,7 +102,7 @@
 
   <script>
     function initializeLiff0003() {
-      liff.init({ liffId: '1657196041-0B5JEMmG' })
+      liff.init({ liffId: '1657313823-VWk8Yr5E' })
         .then(() => {
           if (liff.isLoggedIn()) {
             sendIdTokenToGAS_00A3(); // IDトークンをGASに送信する関数を呼び出す
@@ -119,7 +119,7 @@
     async function sendIdTokenToGAS_00A3() {
       try {
         const idToken = await liff.getIDToken();
-        const response = await fetch('https://script.google.com/macros/s/AKfycby5TecF3cYDq50UijbYni7_tbGGi9Rx8IzXfF0C0VYei5uV6JEozApiHecaYe0RcuA3/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyw3E7YCFmS8W8tY36BzuLkVuoKoJEQ7I_3V4e07WT5-USSE8hzck7Z8GlW23VhTKjp/exec', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
