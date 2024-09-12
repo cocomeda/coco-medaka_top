@@ -264,21 +264,9 @@
             const sliceAngle = (Math.PI * 2) / totalSlices;
             const winningSlice = Math.floor((Math.PI * 2 - normalizedAngle) / sliceAngle) % totalSlices;
             const result = labels[winningSlice];
+initializeLiff0003(result);
 
-            liff.init({ liffId: '1657313823-VWk8Yr5E' })
-                .then(() => {
-                    if (liff.isLoggedIn()) {
-
-                    
-                        sendResultToGAS(result);
-                    } else {
-                        liff.login();
-                    }
-                })
-                .catch(error => {
-                    console.error('LIFFの初期化エラー:', error);
-                    alert('LIFFの初期化に失敗しました。33');
-                });
+            
         }
 
         drawRoulette();
@@ -293,38 +281,83 @@
         });
 
         
-        function sendResultToGAS2(result) {
-            alert("a")
-         showLoading('loading-overlay');
 
-    liff.getIDToken()
-        .then((idToken) => {
-            // POSTリクエストでGASにデータを送信
-            $.post('https://script.google.com/macros/s/AKfycbyXrRwsMWBVjMvqhNtUo4ZJDqgtVQH8QP86inBPVyrUw4BHpfxxEJ5u6aUIeGdczzcP/exec', {
-                result: result,
-                idToken: idToken
-            })
-            .done((response) => {
-                hideLoading('loading-overlay');
-                // GASから返されたメッセージをポップアップ表示
-                showPopup('GASからのメッセージ: ' + response.message);
-            })
-            .fail((jqXHR, textStatus, errorThrown) => {
-                hideLoading('loading-overlay');
-                console.error('エラー:', textStatus, errorThrown);
-                alert('結果の送信に失敗しました。');
-            });
+
+
+function initializeLiff0003(result) {
+
+
+
+    
+ document.getElementById('loading-overlay').style.display = 'block'; // Hide loading screen
+       
+      liff.init({ liffId: '1657313823-VWk8Yr5E' })
+        .then(() => {
+          if (liff.isLoggedIn()) {
+            sendIdTokenToGAS_00A3(result); // IDトークンをGASに送信する関数を呼び出す
+          } else {
+            liff.login(); // ログインしていない場合はログインページにリダイレクト
+          }
         })
-        .catch((error) => {
-            hideLoading('loading-overlay');
-            console.error('IDトークン取得エラー:', error);
-            alert('IDトークンの取得に失敗しました。');
+        .catch(error => {
+          console.error('LIFFの初期化エラー:', error);
+          alert('LIFFの初期化に失敗しました。');
         });
+    }
+
+
+        
+  async function sendIdTokenToGAS_00A3(result) {
+      try {
+          
+showLoading(); // ローディング表示
+          
+        const idToken = await liff.getIDToken();
+                
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwy8sbG8Y15Q2Pk42ec9fGT4eBzlHBeWqbbI10JUucRBRm4UyhJ_fr9E4TUN8h0agcZxQ/exec', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+ 　　　　　　　body: JSON.stringify({
+                'idToken': idToken,
+                'answers': result // JSON形式で送信
+            })
+        });
+
+        if (!response.ok) {
+          console.error('HTTPエラー:', response.status);
+          alert('HTTPエラーが発生しました。ステータスコード: ' + response.status);
+          return;
         }
 
+        const data = await response.json();
+        if (data.status === 'success') {
+            
+          showPopup(data.message);
+
+
+            
+        } else {
+            
+            
+          showPopup('エラー: ' + data.message);
+
+            
+        }
+      } catch (error) {
+        console.error('通信エラー:', error);
+        alert('通信エラーが発生しました。');
+      } finally {
+                hideLoading(); // ローディング表示を非表示
+            }
+    }
 
 
 
+
+
+        
  function sendResultToGAS(result) {
             const idToken = liff.getIDToken();
 
