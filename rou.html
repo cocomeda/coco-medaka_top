@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-    <title>CoCoルーレット!</title>
+    <title>CoCoルーレット</title>
     <style>
          /* 既存のスタイル */
         #overlay {
@@ -135,7 +135,7 @@
         }
 
 
-h1.m12{ 
+h1.m1{ 
  color: black;
 font-weight: bold;
 font-size: 5vw;
@@ -144,6 +144,9 @@ font-size: 5vw;
 margin-bottom: 0vw;
 margin-left: 1vw;
 }	
+
+
+        
         
     </style>
 </head>
@@ -166,7 +169,7 @@ margin-left: 1vw;
     <button id="spin">ルーレットを回す</button>
    <br>
     
-    <h1 class="m12">© Coco Medaka35</h1>
+    <h1 class="m1">© Coco Medaka35</h1>
 
     <script>
         const canvas = document.getElementById('roulette');
@@ -182,7 +185,7 @@ margin-left: 1vw;
             {start: '#909090', end: '#505050'},
             {start: '#808080', end: '#404040'}
         ];
-       const labels = ['0点', '4点', '7点', '1点', '9点', '2点'];
+       const labels = ['1点', '1点', '3点', '0点', '1点', '2点'];
         const totalSlices = labels.length;
         let currentAngle = 0;
         let isSpinning = false;
@@ -326,7 +329,7 @@ showLoading(); // ローディング表示
           
         const idToken = await liff.getIDToken();
                 
-        const response = await fetch('https://script.google.com/macros/s/AKfycbygFXDb99-re0b98coXSkZmyj9tjZ8abLwoKwa2CsbgV13inWgjOml2dTzLWosxkKHS/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxt2a1eYA7EUbk0KrEbtGVsEXIqJ6eT4W8Ca0zKcx1ouMNAyVzpB_MgoRWGrez89BkH/exec', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -417,4 +420,8 @@ function hideLoading() {
 
 
 
-  
+
+
+
+
+
