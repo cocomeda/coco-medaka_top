@@ -365,6 +365,34 @@ margin-left: 1vw;
 
 
 
+/* notification-bar の修正 */
+.notification-bar {
+font-size: 3vw;
+  position: fixed; /* 画面に固定 */
+  top: 0; /* 画面上部に配置 */
+  left: 0; /* 画面左端に配置 */
+  width: 100%; /* 幅を画面いっぱいに */
+  background-color: rgba(255, 255, 255, 0.7); /* 白の半透明 */
+  padding: 2vw 3vw; /* 内側の余白 */
+  text-align: center; /* テキストを中央寄せ */
+  box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1); /* 軽い影で立体感を出す */
+  z-index: 1000; /* 他のコンテンツの上に表示。他の要素より高い値に設定。 */
+  box-sizing: border-box; /* paddingとborderをwidthに含める */
+  /* 高さを自動調整しつつ、必要なら最小高さを設定 */
+  height: auto;
+  min-height: 5vw; /* 例えば、内容に合わせて調整 */
+}
+
+/* #main コンテンツの調整 */
+#main {
+  /* display: none; はJavaScriptで制御するため、ここには記載しません */
+  margin-top: 15vw; /* お知らせ帯の高さに合わせて調整。実測して決めるのが確実です。 */
+}
+
+/* bodyのmargin-topを0にする（任意、もし上部に余白がある場合は） */
+body {
+    margin-top: 0; /* 既存のbodyのmargin-topをリセット */
+}
 
 	
 </style>
