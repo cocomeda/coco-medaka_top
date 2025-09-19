@@ -205,8 +205,8 @@ $(document).ready(function() {
 
         // QRコードデータとIDトークンをGASに送信
         $.ajax({
-            url: 'https://script.google.com/macros/s/AKfycbwyrkgXUgtbAXIfEoU5258zrADq7VCAOiisW9KWz1Ow8jSVurQiVgyqbeFfQrwJbTRL/exec',    
-            //url: 'https://script.google.com/macros/s/AKfycbzeGgWljzalqzgFHSWqzd7napJIsXN7zukNj-MSKMJ3AdpjQ9oSIScQJK2uQtcN8zsr/exec',    
+           // url: 'https://script.google.com/macros/s/AKfycbwyrkgXUgtbAXIfEoU5258zrADq7VCAOiisW9KWz1Ow8jSVurQiVgyqbeFfQrwJbTRL/exec',    
+            url: 'https://script.google.com/macros/s/AKfycbzeGgWljzalqzgFHSWqzd7napJIsXN7zukNj-MSKMJ3AdpjQ9oSIScQJK2uQtcN8zsr/exec',    
             type: 'POST',
             data: { idToken: idToken, qr_data: qr_data },
             success: function (response) {
